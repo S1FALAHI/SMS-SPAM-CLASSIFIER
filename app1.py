@@ -58,7 +58,7 @@ st.sidebar.info(
     **Algorithm used** : Naive Bayes especially the Bernoulli Naive Bayes with TF-IDF Vectorization.
     
     **Project by :** Syed Yaseen (24466-CM-095) 
-    Usha Rama College of Engineering & Technology
+    Usha Rama College of Engineering & Technology,
     Telaprolu.
     """
 )
@@ -86,44 +86,47 @@ input_sms = st.text_area("Enter your message below:", example_sms)
 
 # Predict Button + Spinner block
 if st.button("Predict"):
-    with st.spinner("Analyzing message..."):
-        # Preprocess
-        transformed_sms = transform_text(input_sms)
-
-        # Vectorize
-        vector_input = tfidf.transform([transformed_sms])
-
-        # Predict
-        result = model.predict(vector_input)[0]
-        proba = model.predict_proba(vector_input)[0]
-
-        # Probabilities as percentages
-        prob_not_spam = round(proba[0] * 100, 2)
-        prob_spam = round(proba[1] * 100, 2)
-
+    if not input_sms.strip():  # If input is empty or only spaces and empty string in python=False and by "not" it becomes True
+        st.warning("Please enter a message before clicking Predict.")
+    else:    
+        with st.spinner("Analyzing message..."):
+            # Preprocess
+            transformed_sms = transform_text(input_sms)
     
-        # Header + Explanation block
+            # Vectorize
+            vector_input = tfidf.transform([transformed_sms])
     
-
-        # Header
-        if result == 1:
-            st.header("**Spam**")
-        else:
-            st.header("**Not Spam**")
-
-        # Explanation section
-        st.markdown("---")
-        st.subheader("Description:")
-        st.write(f"Probability of Spam class: **{prob_spam}%**")
-        st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
-
-        if result == 1:
-            st.markdown(
-                "Since the probability of **Spam** class is greater than **Not Spam** class, "
-                "it was classified as **Spam**."
-            )
-        else:
-            st.markdown(
-                "Since the probability of **Not Spam** class is greater than **Spam** class, "
-                "it was classified as **Not Spam**."
-            )
+            # Predict
+            result = model.predict(vector_input)[0]
+            proba = model.predict_proba(vector_input)[0]
+    
+            # Probabilities as percentages
+            prob_not_spam = round(proba[0] * 100, 2)
+            prob_spam = round(proba[1] * 100, 2)
+    
+        
+            # Header + Explanation block
+        
+    
+            # Header
+            if result == 1:
+                st.header("**Spam**")
+            else:
+                st.header("**Not Spam**")
+    
+            # Explanation section
+            st.markdown("---")
+            st.subheader("Description:")
+            st.write(f"Probability of Spam class: **{prob_spam}%**")
+            st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
+    
+            if result == 1:
+                st.markdown(
+                    "Since the probability of **Spam** class is greater than **Not Spam** class, "
+                    "it was classified as **Spam**."
+                )
+            else:
+                st.markdown(
+                    "Since the probability of **Not Spam** class is greater than **Spam** class, "
+                    "it was classified as **Not Spam**."
+                )
