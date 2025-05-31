@@ -1,57 +1,121 @@
 import sys
 sys.path.append("/ur project/myenvi/lib/site-packages")
-import  streamlit as st
+import streamlit as st
 import pickle
 import string
 import nltk
+
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+
+# Download required NLTK resources
 nltk.download("punkt")
 nltk.download("punkt_tab")
 nltk.download("stopwords")
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-ps=PorterStemmer()
+
+# Load vectorizer and model
+tfidf = pickle.load(open("vectorizer.pkl", "rb"))
+model = pickle.load(open("model.pkl", "rb"))
+
+# Text preprocessing function
+ps = PorterStemmer()
 def transform_text(text):
-    text=text.lower()
-    text=nltk.word_tokenize(text)
-    y=[]
+    text = text.lower()
+    text = nltk.word_tokenize(text)
+
+    y = []
     for i in text:
         if i.isalnum():
             y.append(i)
-    text=y[:]
+
+    text = y[:]
     y.clear()
 
     for i in text:
         if i not in stopwords.words("english") and i not in string.punctuation:
             y.append(i)
 
-    text=y[:]
+    text = y[:]
     y.clear()
 
     for i in text:
         y.append(ps.stem(i))
-        
+
     return " ".join(y)
 
-tfidf=pickle.load(open("vectorizer.pkl","rb"))
-model=pickle.load(open("model.pkl","rb"))
+# Sidebar block
+st.sidebar.title("About")
+st.sidebar.info(
+    """
+    **Email/SMS Spam Classifier**
 
-st.title("Email/SMS spam classifier")
+    Built using Machine Learning (Bernoulli Naive Bayes)  
+    Detects whether a message is **Spam** or **Not Spam**.
 
-input_sms=st.text_area("Enter the message")
+    **Project by:** Syed Yaseen (24466-CM-095) 
+    Usha Rama College of Engineering & Technology
+    """
+)
 
+# App Title
+st.title("Email/SMS Spam Classifier")
+
+# Sample Messages block
+example_sms = st.selectbox(
+    "Choose a sample message (optional):",
+    ["", 
+     "congratulations! you have won 1000 call on this number to get your prize", 
+     "Hey, are you coming to class today?", 
+     "You could be entitled up to £3,160 in compensation from mis-sold PPI on a credit card or loan. Please reply PPI for info or STOP to opt out.", 
+     "Meet me at the cafe at 5.",
+     "I am free today, lets go out for a movie. What do you say?",
+     "A [redacted] loan for £950 is approved for you if you receive this SMS. 1 min verification & cash in 1 hr at www.[redacted].co.uk to opt out reply",
+     "Did you see the match? It was insane"]
+)
+
+# Use selected sample message as default input
+input_sms = st.text_area("Enter your message below:", example_sms)
+
+# Predict Button + Spinner block
 if st.button("Predict"):
- 
-    #preprocess
-    transformed_sms=transform_text(input_sms)
+    with st.spinner("Analyzing message..."):
+        # Preprocess
+        transformed_sms = transform_text(input_sms)
 
-    #vectorize
-    vector_input=tfidf.transform([transformed_sms])
+        # Vectorize
+        vector_input = tfidf.transform([transformed_sms])
 
-    #predict
-    result=model.predict(vector_input)[[0]]
+        # Predict
+        result = model.predict(vector_input)[0]
+        proba = model.predict_proba(vector_input)[0]
 
-    #Display
-    if result==1:
-        st.header("Spam")
-    else:
-        st.header("Not spam")    
+        # Probabilities as percentages
+        prob_not_spam = round(proba[0] * 100, 2)
+        prob_spam = round(proba[1] * 100, 2)
+
+    
+        # Header + Explanation block
+    
+
+        # Header
+        if result == 1:
+            st.header("**Spam**")
+        else:
+            st.header("**Not Spam**")
+
+        # Explanation section
+        st.markdown("---")
+        st.subheader("Description:")
+        st.write(f"Probability of Spam class: **{prob_spam}%**")
+        st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
+
+        if result == 1:
+            st.markdown(
+                "Since the probability of **Spam** class is greater than **Not Spam** class, "
+                "it was classified as **Spam**."
+            )
+        else:
+            st.markdown(
+                "Since the probability of **Not Spam** class is greater than **Spam** class, "
+                "it was classified as **Not Spam**."
+            )
