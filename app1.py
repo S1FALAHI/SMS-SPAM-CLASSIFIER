@@ -52,7 +52,7 @@ st.sidebar.info(
     This is a web application built using Machine learning technology that detects whether a message is **Spam** or **Not Spam**.
     
     **Model Evaluation** :
-    Accuracy  : 98.3%
+    Accuracy  : 98.3% and
     Precision : 100%
     
     **Algorithm used** : Naive Bayes especially the Bernoulli Naive Bayes with TF-IDF Vectorization.
