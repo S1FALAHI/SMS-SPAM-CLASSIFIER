@@ -49,13 +49,19 @@ st.sidebar.info(
     """
     **Email/SMS Spam Classifier**
 
-    Built using Machine Learning (Bernoulli Naive Bayes)  
-    Detects whether a message is **Spam** or **Not Spam**.
-
-    **Project by:** Syed Yaseen (24466-CM-095) 
+    This is a web application built using Machine learning technology that detects whether a message is **Spam** or **Not Spam**.
+    **Model Evaluation** :
+    Accuracy  : 98.3%
+    Precision : 100%
+    **Algorithm used** : Naive Bayes especially the Bernoulli Naive Bayes with TF-IDF Vectorization.
+    
+    **Project by :** Syed Yaseen (24466-CM-095) 
     Usha Rama College of Engineering & Technology
+    Telaprolu.
     """
 )
+
+st.sidebar.markdown("[View Project Report (PDF)](https://drive.google.com/file/d/1s8rVXgzoeY24yjGvWcIto28GpfnUkZhE/view?usp=sharing)")
 
 # App Title
 st.title("Email/SMS Spam Classifier")
