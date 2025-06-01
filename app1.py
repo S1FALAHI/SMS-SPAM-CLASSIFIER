@@ -13,6 +13,19 @@ nltk.download("punkt")
 nltk.download("punkt_tab")
 nltk.download("stopwords")
 
+# Blue border styling wrapper
+st.markdown("""
+    <style>
+        .app-container {
+            border: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #ffffff;
+        }
+    </style>
+    <div class="app-container">
+""", unsafe_allow_html=True)
+
 # Load vectorizer and model
 tfidf = pickle.load(open("vectorizer.pkl", "rb"))
 model = pickle.load(open("model.pkl", "rb"))
@@ -130,3 +143,7 @@ if st.button("Predict"):
                     "Since the probability of **Not Spam** class is greater than **Spam** class, "
                     "it was classified as **Not Spam**."
                 )
+
+# Close styled container
+st.markdown("</div>", unsafe_allow_html=True)
+
