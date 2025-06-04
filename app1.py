@@ -44,7 +44,7 @@ def transform_text(text):
     return " ".join(y)
 
 # Sidebar block
-st.sidebar.title("About")
+st.sidebar.title("📝 About")
 st.sidebar.info(
     """
     **Email/SMS Spam Classifier**
@@ -63,10 +63,10 @@ st.sidebar.info(
     """
 )
 
-st.sidebar.markdown("[View Project Report (PDF)](https://drive.google.com/file/d/1s8rVXgzoeY24yjGvWcIto28GpfnUkZhE/view?usp=sharing)")
+st.sidebar.markdown("[🔗 View Project Report (PDF)](https://drive.google.com/file/d/1s8rVXgzoeY24yjGvWcIto28GpfnUkZhE/view?usp=sharing)")
 
 # App Title
-st.title("Email/SMS Spam Classifier")
+st.title("🤖 Email/SMS Spam Classifier")
 
 # Sample Messages block
 example_sms = st.selectbox(
@@ -78,14 +78,16 @@ example_sms = st.selectbox(
      "Meet me at the cafe at 5.",
      "I am free today, lets go out for a movie. What do you say?",
      "A [redacted] loan for £950 is approved for you if you receive this SMS. 1 min verification & cash in 1 hr at www.[redacted].co.uk to opt out reply",
-     "Did you see the match? It was insane"]
+     "Did you see the match? It was insane",
+     "You’ve won a lottery! Send your bank details to claim the prize.",
+     "Urgent: You have been selected for a prize draw. Respond now."]
 )
 
 # Use selected sample message as default input
 input_sms = st.text_area("Enter your message below:", example_sms)
 
 # Predict Button + Spinner block
-if st.button("Predict"):
+if st.button("**Predict**"):
     if not input_sms.strip():  # If input is empty or only spaces and empty string in python=False and by "not" it becomes True
         st.warning("Please enter a message before clicking Predict.")
     else:    
@@ -110,13 +112,13 @@ if st.button("Predict"):
     
             # Header
             if result == 1:
-                st.header("**Spam**")
+                st.header("⚠️ **Spam**")
             else:
-                st.header("**Not Spam**")
+                st.header("✅ **Not Spam**")
     
             # Explanation section
             st.markdown("---")
-            st.markdown("#### Description:")
+            st.markdown("📘#### Description:")
             st.write(f"Probability of Spam class: **{prob_spam}%**")
             st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
     
@@ -141,7 +143,7 @@ if st.button("Predict"):
                          ('da', 141), ('see', 135), ('back', 127), ('think', 126), ('today', 121), ('sorry', 121), ('n', 120)]
 
 
-            with st.expander("**Top 30 Words used in Spam and Not Spam Messages**"):
+            with st.expander("📃 **Top 30 Words used in the Spam and Not Spam Messages of the training dataset**"):
                 col1, col2 = st.columns(2)
             
                 with col1:
