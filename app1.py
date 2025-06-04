@@ -118,7 +118,7 @@ if st.button("**Predict**"):
     
             # Explanation section
             st.markdown("---")
-            st.markdown("📘#### Description:")
+            st.markdown("#### 📘 Description:")
             st.write(f"Probability of Spam class: **{prob_spam}%**")
             st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
     
@@ -143,7 +143,7 @@ if st.button("**Predict**"):
                          ('da', 141), ('see', 135), ('back', 127), ('think', 126), ('today', 121), ('sorry', 121), ('n', 120)]
 
 
-            with st.expander("📃 **Top 30 Words used in the Spam and Not Spam Messages of the training dataset**"):
+            with st.expander("**Top 30 Words used in Spam and Not Spam Messages in the training dataset**"):
                 col1, col2 = st.columns(2)
             
                 with col1:
