@@ -49,7 +49,7 @@ st.sidebar.info(
     """
     **Email/SMS Spam Classifier**
 
-    This is a web application built using Machine learning technology that detects whether a message is **Spam** or **Not Spam**.
+    This is a web application built using **Streamlit, a Python library**, that utilizes Machine Learning to detect whether a message is **Spam** or **Not Spam**.
     
     **Model Evaluation** :
     Accuracy  : 98.3% and
@@ -130,5 +130,30 @@ if st.button("Predict"):
                     "Since the probability of **Not Spam** class is greater than **Spam** class, "
                     "it was classified as **Not Spam**."
                 )
+            
+            spam_words = [('call', 302), ('free', 191), ('txt', 130), ('u', 119), ('ur', 119), ('mobile', 105), ('text', 104), ('stop', 104), ('claim', 96), 
+                          ('reply', 96), ('prize', 81), ('get', 70), ('new', 64), ('send', 58), ('urgent', 57), ('nokia', 54), ('cash', 51), ('contact', 51), 
+                          ('please', 49), ('service', 48), ('win', 47), ('c', 45), ('phone', 43), ('guaranteed', 42), ('per', 41), ('week', 40), ('customer', 40), 
+                          ('tone', 38), ('chat', 36), ('cs', 35)]
+
+            ham_words = [('u', 883), ('get', 293), ('gt', 288), ('lt', 287), ('go', 240), ('got', 236), ('know', 225), ('like', 221), ('ok', 217), ('good', 212), ('come', 211), ('ur', 197),
+                         ('time', 188), ('call', 184), ('love', 172), ('day', 166), ('going', 164), ('want', 159), ('lor', 159), ('one', 158), ('home', 152), ('need', 151), ('still', 143),
+                         ('da', 141), ('see', 135), ('back', 127), ('think', 126), ('today', 121), ('sorry', 121), ('n', 120)]
 
 
+            with st.expander("Top 30 Words in Spam and Not Spam Messages"):
+                col1, col2 = st.columns(2)
+            
+                with col1:
+                    st.markdown("### Spam")
+                    for word, count in spam_words:
+                        st.write(f"**{word}** — {count} times")
+            
+                with col2:
+                    st.markdown("### Not Spam")
+                    for word, count in ham_words:
+                        st.write(f"**{word}** — {count} times")
+            
+                            
+            
+            
