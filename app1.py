@@ -66,7 +66,7 @@ st.sidebar.info(
 st.sidebar.markdown("[🔗 View Project Report (PDF)](https://drive.google.com/file/d/1s8rVXgzoeY24yjGvWcIto28GpfnUkZhE/view?usp=sharing)")
 
 # App Title
-st.title("🤖 Email/SMS Spam Classifier")
+st.title("Email/SMS Spam Classifier")
 
 # Sample Messages block
 example_sms = st.selectbox(
@@ -118,7 +118,7 @@ if st.button("**Predict**"):
     
             # Explanation section
             st.markdown("---")
-            st.markdown("#### 📘 Description:")
+            st.markdown("#### Description:")
             st.write(f"Probability of Spam class: **{prob_spam}%**")
             st.write(f"Probability of Not Spam class: **{prob_not_spam}%**")
     
